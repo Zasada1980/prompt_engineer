@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: Prompt Repository API
+  version: "1.0.0"
+servers:
+  - url: https://api.example.com/prompt-repository
+paths:
+  /search:
+    get:
+      summary: Search prompts by keyword
+      description: |
+        Возвращает список шаблонов промптов, которые соответствуют переданным ключевым словам.
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+          description: Строка поиска (ключевые слова).
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        prompt:
+                          type: string
+  /save:
+    post:
+      summary: Save a new prompt
+      description: |
+        Сохраняет новый шаблон промпта в репозитории.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                prompt:
+                  type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
